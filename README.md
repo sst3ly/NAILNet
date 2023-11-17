@@ -1,6 +1,16 @@
+# NAIL Net
+NAIL Net is a python package for making neural networks.
+
+You can install it with pip like this:
+`pip install NAILNet`
+
+and import it into your project like this:
+`import NAILNet as nail`
+
+## Docs
 Make a model using this:
 ```
-model = ai.Model(layerCounts, activations, mutationsPerLayer)
+model = nail.Model(layerCounts, activations, mutationsPerLayer)
 ```
 LayerCounts is a list of integers where each integer represents the number of nodes in a layer(input, hidden, or output) in the neural network.
 Activations is a list of the activation functions of each layer. 
@@ -10,7 +20,7 @@ Mutations per layer is an argument that tells the model how many mutations shoul
 
 To train the model, you can use the NEATSim:
 ```
-neat = NEATSim(model_lcs, activations, scoreFunc, populationSize, reproSize, mutSize, mutationsPerLayer)
+neat = nail.NEATSim(model_lcs, activations, scoreFunc, populationSize, reproSize, mutSize, mutationsPerLayer)
 ```
 The model lcs, activations, and mutations per layer are the same as the values with these names when creating a Model object. 
 The scoreFunc is a reference to a function that is passed a model and outputs a fitness score for that model.
@@ -20,7 +30,7 @@ Finally, the mutSize is the number of mutations that happens to a model that sho
 Here's an example:
 ```
 scoreModel = lambda x: sum(x.evaluate([1, 2, 3]))
-neat = NEATSim([3, 3, 3], ["linear", "sigmoid", "linear"], scoreModel, 20, 5, 3, 3)
+neat = nail.NEATSim([3, 3, 3], ["linear", "sigmoid", "linear"], scoreModel, 20, 5, 3, 3)
 
 ```
 This setup means the simulation will have a population of 20, each round 5 AIs will reproduce back to 20, and each mutation to happen will have 3 layers mutated and 3 mutations in that layer.
