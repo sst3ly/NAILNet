@@ -2,6 +2,8 @@ import random
 import math
 import copy
 
+activations = ["linear", "sigmoid", "tanh", "relu", "leaky_relu"]
+
 def getMutVal():
     return ((random.random() * 2) - 1) / 10
 
@@ -56,7 +58,10 @@ class Layer():
 
     def mutate(self, times):
         for i in range(times):
-            self.mutateOnce()
+            if(chance(0.8)):
+                self.mutateOnce()
+            else:
+                self.activation = random.choice(activations)
 
     def mutateOnce(self):
         i = random.randint(0, len(self.weights) - 1)
@@ -65,6 +70,8 @@ class Layer():
         if(chance(0.25)):
             b = random.randint(0, len(self.biases) - 1)
             self.biases[b] += getMutVal()
+        if(chance(0.2)):
+            self.activation = random.choice(activations)
 
 class Model():
     def __init__(self, lcs, activations, mutpl):
