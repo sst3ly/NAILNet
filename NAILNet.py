@@ -101,7 +101,8 @@ class Model():
         self.layers[l].mutate(self.mutpl)
 
 class NEATSim():
-    def __init__(self, model_lcs, activations, scoreFunc, populationSize, reproSize, mutSize, mutpl):
+    def __init__(self, model_lcs, activations, scoreFunc, populationSize, reproSize, mutSize, mutpl, sms = False):
+        self.sms = sms
         self.mutpl = mutpl
         self.model_lcs = model_lcs
         self.activations = activations
@@ -121,6 +122,10 @@ class NEATSim():
         self.population.sort(reverse=True, key=lambda x: x[0])
 
     def calculateFitnesses(self):
+        if(self.sms):
+            scores = self.scoreFunc([i[1] for i in self.population])
+            self.population = [(scores[i], self.population[i][1]) for i in range(len(self.population))]
+            return
         for i in range(len(self.population)):
             score = self.scoreFunc(self.population[i][1])
             self.population[i] = (score, self.population[i][1])
